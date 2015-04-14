@@ -10,7 +10,7 @@
 #
 #  PREFIX for installation.
 #
-PREFIX     = 
+PREFIX     = ${DESTDIR}
 
 
 #
@@ -21,7 +21,7 @@ TEMPDIR     = /usr/share/gnump3d
 CONFDIR     = /etc/gnump3d
 CACHEDIR    = /var/cache/gnump3d
 SERVEDIR    = /var/cache/gnump3d/serving
-MANDIR      = /usr/local/man/man1
+MANDIR      = /usr/share/man/man1
 LOGDIR      = /var/log/gnump3d
 LIBDIR      = `perl bin/getlibdir`
 PLUGDIR     = $(LIBDIR)/gnump3d/plugins
@@ -41,7 +41,7 @@ BASE        = gnump3d
 #  Default target, give the user some help.
 #
 a:
-	@echo "gnump3d $VERSION Makefile"
+	@echo "gnump3d $(VERSION) Makefile"
 	@echo ""
 	@echo " Available targets (alphabetically):"
 	@echo "    make debug     - Show debug diagnostics from this Makefile"
