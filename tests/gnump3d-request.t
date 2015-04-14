@@ -46,7 +46,7 @@ isa_ok( $request, "gnump3d::Request" );
 #
 
 # Request path
-is( $request->getRequest(), "/", " The incoming request was correct" );
+is( $request->getRequest(), "/?foo=bar", " The incoming request was correct" );
 
 # User-Agent
 is( $request->getUserAgent(), "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", " The incoming user-agent was correct" );

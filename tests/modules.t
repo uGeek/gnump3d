@@ -11,8 +11,8 @@ BEGIN{ use_ok( 'Carp' ); }
 require_ok( 'Carp' );
 
 
-BEGIN{ use_ok( 'ConfigFile' ); }
-require_ok( 'ConfigFile' );
+BEGIN{ use_ok( 'Config::File' ); }
+require_ok( 'Config::File' );
 
 
 BEGIN{ use_ok( 'Digest::MD5' ); }

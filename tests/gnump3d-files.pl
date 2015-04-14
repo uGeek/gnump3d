@@ -4,12 +4,12 @@
 #
 
 use strict;
-use ConfigFile;
+use Config::File;
 
 #
 #  Read the configuration file.
 #
-my $config_hash	= ConfigFile::read_config_file("../etc/file.types");
+my $config_hash	= Config::File::read_config_file("../etc/file.types");
 my %hash	= %$config_hash;
 
 #

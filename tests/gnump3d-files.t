@@ -16,9 +16,9 @@ use Test::More qw( no_plan );
 # Modules we use.
 #
 BEGIN{ use_ok( 'gnump3d::filetypes' ); }
-require_ok( 'gnump3d::filetypess' );
+require_ok( 'gnump3d::filetypes' );
 
-my $tester = gnump3d::filetypes->new();
+my $tester = gnump3d::filetypes->new(file => './etc/file.types');
 
 # Is it created OK?
 ok( defined( $tester ), "Created OK" );
