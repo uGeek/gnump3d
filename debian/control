@@ -1,0 +1,21 @@
+Source: gnump3d
+Section: sound
+Priority: optional
+Maintainer: Vasily i. Redkin <vir@ctm.ru>
+Build-Depends: debhelper (>= 9), libconfigfile-perl
+Standards-Version: 3.9.5
+Homepage: https://github.com/vir/gnump3d
+
+Package: gnump3d
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, logrotate, perl, perl-modules, adduser, netbase
+Description: The GNU Streaming MP3/OGG Vorbis Server.
+ GNUMP3d attempts to provide an attractive interface to browsing
+ and streaming a large MP3 or OGG collection via your web browser.
+ .
+ It allows MP3's and OGG Vorbis files to be served to any media player
+ which supports audio streaming.  Supported players include XMMS, FreeAmp
+ and WinAmp.
+ .
+ In addition to this support is also present for streaming MPEG video
+ files direct to clients.
