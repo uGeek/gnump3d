@@ -1,3 +1,9 @@
+gnump3d (3.0vir1) UNRELEASED; urgency=medium
+
+  * Fixed symlink creation
+
+ -- Vasily i. Redkin <vir@ctm.ru>  Wed, 15 Apr 2015 16:39:25 +0300
+
 gnump3d (3.0) unstable; urgency=low
 
   * Initial Release.

@@ -134,7 +134,7 @@ install:
 	cp lib/gnump3d/lang/*.pm ${PREFIX}/${LANGDIR}
 	cp bin/gnump3d2 ${PREFIX}/${BINDIR}
 	chmod 755 ${PREFIX}/${BINDIR}/gnump3d2
-	-ln -sf ${PREFIX}/${BINDIR}/gnump3d2 ${PREFIX}/${BINDIR}/gnump3d
+	-ln -sf gnump3d2 ${PREFIX}/${BINDIR}/gnump3d
 	cp bin/gnump3d-top ${PREFIX}/$(BINDIR)
 	chmod 755 ${PREFIX}/${BINDIR}/gnump3d-top
 	cp bin/gnump3d-index ${PREFIX}/${BINDIR}
