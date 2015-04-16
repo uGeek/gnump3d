@@ -1,3 +1,9 @@
+gnump3d (3.0.vir2) UNRELEASED; urgency=medium
+
+  * Fixed staatic html theme content serving
+
+ -- Vasily i. Redkin <vir@ctm.ru>  Thu, 16 Apr 2015 09:07:44 +0300
+
 gnump3d (3.0.vir1) UNRELEASED; urgency=medium
 
   * Fixed symlink creation
