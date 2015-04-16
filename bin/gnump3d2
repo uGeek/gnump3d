@@ -1187,6 +1187,7 @@ while (1)
 		    {
 			my $mime = $mime_cache{ lc( &getSuffix( $testPath ) ) };
 			my $header = getHTTPHeader( 200, $mime );
+			&sendData( $data, $header);
 
 			my @lines = &readFileWithExpansion( $testPath );
 			foreach my $line ( @lines )
