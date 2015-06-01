@@ -455,6 +455,12 @@ sub _formatSingleFile ( )
       $format = $TAGS{"FILENAME"};
     }
 
+    # in case something went wrong, show file name instead of empty string
+    unless(defined $format) {
+      $file =~ s#^.*[/\\]##s;
+      return $file;
+    }
+
     return($format);
 
 }

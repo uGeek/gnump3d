@@ -1,3 +1,9 @@
+gnump3d (3.0.vir4) UNRELEASED; urgency=medium
+
+  * Show filename if tags is unavailable
+
+ -- Vasily i. Redkin <vir@ctm.ru>  Mon, 01 Jun 2015 14:09:25 +0300
+
 gnump3d (3.0.vir3) UNRELEASED; urgency=medium
 
   * New configuration option added: guess_russian_encoding
