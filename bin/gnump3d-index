@@ -241,7 +241,11 @@ readCache( "$cache.updates" ) if( -e "$cache.updates" );
 #
 # Do the indexing - following symlinks on non-Windows platforms.
 # 
-if ( &isWindows() )
+if ( @ARGV )
+{
+  @FOUND = @ARGV;
+}
+elsif ( &isWindows() )
 {
   find({ wanted => \&findAudio }, $CONFIG{'root'} );
 }

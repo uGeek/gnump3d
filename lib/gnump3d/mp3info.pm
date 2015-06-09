@@ -9,7 +9,7 @@ use vars qw(
 	@mp3_genres %mp3_genres @winamp_genres %winamp_genres $try_harder
 	@t_bitrate @t_sampling_freq @frequency_tbl %v1_tag_fields
 	@v1_tag_names %v2_tag_names %v2_to_v1_names $AUTOLOAD
-	@mp3_info_fields $DECODE_V1_TAG
+	@mp3_info_fields $DECODE_V1_TAG $DECODE_V2_TAG
 );
 
 @ISA = 'Exporter';
@@ -184,6 +184,11 @@ sub use_mp3_utf8 {
 sub decode_v1_tag {
 	my($val) = @_;
 	$DECODE_V1_TAG = $val;
+}
+
+sub decode_v2_tag {
+	my($val) = @_;
+	$DECODE_V2_TAG = $val;
 }
 
 =pod
@@ -504,7 +509,6 @@ sub get_mp3tag {
 					$mp3_genres[ord(substr $tag, -1)]);
 				$info{TAGVERSION} = 'ID3v1';
 			}
-warn "XZXZ UNICODE: $UNICODE DECODE_V1_TAG: $DECODE_V1_TAG";
 			if ($DECODE_V1_TAG) {
 				for my $key (keys %info) {
 					next unless defined $info{$key};
@@ -532,7 +536,6 @@ warn "XZXZ UNICODE: $UNICODE DECODE_V1_TAG: $DECODE_V1_TAG";
 		return undef;
 	}
 
-warn "XXX $ver, $v2: ".join(', ', %info);
 	if (($ver == 0 || $ver == 2) && $v2) {
 		if ($raw_v2 == 1 && $ver == 2) {
 			%info = %$v2;
@@ -594,13 +597,17 @@ warn "XXX $ver, $v2: ".join(', ', %info);
 								# make sure string is UTF8, and set flag appropriately
 								$data = Encode::decode('utf8', $data);
 							} elsif ($encoding eq "\000") {
-								# Try and guess the encoding, otherwise just use latin1
-								my $dec = Encode::Guess->guess($data);
-								if (ref $dec) {
-									$data = $dec->decode($data);
+								if ($DECODE_V2_TAG) {
+									$DECODE_V2_TAG->($data);
 								} else {
-									# Best try
-									$data = Encode::decode('iso-8859-1', $data);
+									# Try and guess the encoding, otherwise just use latin1
+									my $dec = Encode::Guess->guess($data);
+									if (ref $dec) {
+										$data = $dec->decode($data);
+									} else {
+										# Best try
+										$data = Encode::decode('iso-8859-1', $data);
+									}
 								}
 							}
 
@@ -617,7 +624,6 @@ warn "XXX $ver, $v2: ".join(', ', %info);
 							} elsif ($data =~ s/^\xFE\xFF//) {
 								$pat = 'n';
 							}
-warn "XZXZX: $pat";
 							if ($pat) {
 								$data = pack 'C*', map {
 									(chr =~ /[[:ascii:]]/ && chr =~ /[[:print:]]/)
@@ -656,7 +662,6 @@ warn "XZXZX: $pat";
 								$info{$hash->{$id}} = [ $info{$hash->{$id}}, $data ];
 							}
 						} else {
-warn "ZZZZZZZZZZZZZ: $data: ".join(', ', %info);
 							$info{$hash->{$id}} = $data;
 						}
 					}

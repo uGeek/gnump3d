@@ -209,6 +209,7 @@ sub getTags
     if(&getConfig("guess_russian_encoding"))
     {
       gnump3d::mp3info::decode_v1_tag(\&decode_russian_string);
+      gnump3d::mp3info::decode_v2_tag(\&decode_russian_string);
     }
 
     my $filename = $file;
