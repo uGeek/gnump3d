@@ -1,3 +1,9 @@
+gnump3d (3.0.vir5) UNRELEASED; urgency=medium
+
+  * Fix v2 tags, broken in .vir3
+
+ -- Vasily i. Redkin <vir@ctm.ru>  Tue, 09 Jun 2015 15:36:03 +0300
+
 gnump3d (3.0.vir4) UNRELEASED; urgency=medium
 
   * Show filename if tags is unavailable

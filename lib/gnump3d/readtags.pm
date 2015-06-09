@@ -206,7 +206,10 @@ sub getTags
     my ($file) = (@_);
     my %TAGS;
 
-		gnump3d::mp3info::use_mp3_utf8(0) if &getConfig("guess_russian_encoding");
+    if(&getConfig("guess_russian_encoding"))
+    {
+      gnump3d::mp3info::decode_v1_tag(\&decode_russian_string);
+    }
 
     my $filename = $file;
 
@@ -253,10 +256,6 @@ sub getTags
     $TAGS{'MTIME'}    = $fstat[9];
     $TAGS{'FILENAME'} = $filename;
 
-		if(&getConfig("guess_russian_encoding")) {
-			decode_russian_string($TAGS{$_}) foreach(keys %TAGS);
-		}
-
     return (%TAGS);
 }
 
@@ -266,10 +265,10 @@ sub decode_russian_string
 {
 	use bytes;
 	return if Encode::is_utf8($_[0]);
-	eval { Encode::decode('UTF-8', $_[0], Encode::FB_CROAK ) };
+	eval { $_[0] = Encode::decode('UTF-8', $_[0], Encode::FB_CROAK ); };
 	return unless $@;
 	$enc = guess_russian_encoding($_[0]) || $enc;
-	$_[0] = Encode::encode_utf8(Encode::decode($enc, $_[0])) if $enc;
+	$_[0] = Encode::decode($enc, $_[0]) if $enc;
 }
 
 sub guess_russian_encoding
@@ -282,7 +281,6 @@ sub guess_russian_encoding
 		return undef;
 	}
 }
-
 
 #
 # End of module
