@@ -27,12 +27,15 @@ case "$1" in
             echo "Creating user '$USER' and group '$USER'..."
             addgroup --system $USER
             adduser --system --ingroup $USER --home $CACHE --gecos "GNUMP3d daemon" --shell /bin/sh --disabled-password $USER
+            GRP=$USER
+        else
+            GRP=`getent passwd $USER | cut -d: -f4`
         fi
 
         for DIR in $CACHE $LOG
         do
             mkdir -p ${DIR}
-            dpkg-statoverride --list $DIR >/dev/null || chown -R $USER:$USER ${DIR}
+            dpkg-statoverride --list $DIR >/dev/null || chown -R $USER:$GRP ${DIR}
         done
     ;;
 
