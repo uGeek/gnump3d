@@ -1,3 +1,9 @@
+gnump3d (3.0.vir7) UNRELEASED; urgency=medium
+
+  * Fixed upgrade from ancient versions
+
+ -- Vasily i. Redkin <vir@ctm.ru>  Thu, 14 Jan 2016 13:42:23 +0300
+
 gnump3d (3.0.vir6) UNRELEASED; urgency=medium
 
   * Fix v2 tags decoding
