@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html><head>
+ <!--
+  HTML5 audio player for GnuMp3d
+  Author: Vasily i. Redkin <vasilyredkin@gmail.com>
+  MIT license
+ -->
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta http-equiv-"X-UA-Compatible" content="IE=9"/>
+ <title>Player</title>
+ <script language="javascript">
+//<![CDATA[
+var playlist = [ ];
+var currentItem;
+function play(what, append)
+{
+//	alert('Playing: ' + what);
+	loadPlaylist(what, append);
+}
+function loadPlaylist(url, append)
+{
+	var client = new XMLHttpRequest();
+	client.open('GET', url, true);
+	client.onreadystatechange = function() {
+		console.log('client.onreadystatechange: client.readyState = ' + client.readyState + ', status = ' + client.status);
+		if(client.readyState == 4 && client.status == 200)
+			parsePalylist(client.responseText, append);
+	}
+	client.send();
+}
+function parsePalylist(text, append)
+{
+	var lines = text.split('\n');
+	var row;
+	if(! append)
+		playlist = [ ];
+	for(var i = 0; i < lines.length; ++i) {
+		if(lines[i].length == 0)
+			continue;
+
+		if(! row)
+			row = { };
+		var m = lines[i].match(/^#EXTINF:(\d+),(.*)/);
+		if(m) {
+			row.length = m[1];
+			row.title = m[2];
+		} else if(lines[i].match(/^#/)) {
+			// ignore it
+		} else {
+			row.src = lines[i];
+			if(! row.title) {
+				row.title = unescape(row.src.replace(/^.*\//, ''));
+			}
+
+			playlist.push(row);
+			row = null;
+		}
+	}
+	showPlayList();
+	if(! append)
+		playTrack(0);
+}
+
+function showPlayList()
+{
+	var new_tbody = document.createElement('tbody');
+	for(var i = 0; i < playlist.length; ++i) {
+		var playListRow = document.createElement('tr');
+
+		var cell = document.createElement('td');
+		cell.textContent = playlist[i].title;
+		playListRow.appendChild(cell);
+
+		playListRow.setAttribute('onClick', 'playTrack(' + i + ')');
+		if(currentItem == i)
+			playListRow.className = 'current';
+
+		new_tbody.appendChild(playListRow);
+	}
+	var table = document.getElementById('playlist');
+	table.replaceChild(new_tbody, table.getElementsByTagName('tbody')[0]);
+}
+function resize_handler()
+{
+	var l = document.getElementById("playlistwrapper");
+	l.style.height = (window.innerHeight - l.offsetTop - 3) + 'px';
+
+	// scroll list to bottom
+	//l.scrollTop = l.scrollHeight;
+}
+function playTrack(num)
+{
+	console.log('playTrack(' + num + ')');
+	currentItem = num;
+
+	document.getElementById('nowplaying').textContent = (currentItem + 1) + '/' + playlist.length;
+
+	{
+		var rows = document.getElementById('playlist').getElementsByTagName('tr');
+		for(var i = 0; i < rows.length; ++i)
+			rows[i].className = (i == currentItem) ? 'current' : '';
+	}
+
+	var audio = document.getElementById('myaudio');
+	audio.src = playlist[currentItem].src;
+	audio.play();
+	/*
+	audio.load();
+	audio.addEventListener("canplay", function() {
+		console.log('audio canplay');
+		audio.play();
+	}, true);
+	*/
+	audio.addEventListener("playing", onAudioPlaying, true);
+}
+function onTrackEnd()
+{
+	console.log('audio ended');
+	var audio = document.getElementById('myaudio');
+	audio.removeEventListener("ended", onTrackEnd);
+	nextTrack();
+}
+function onAudioPlaying()
+{
+	console.log('audio playing');
+	var audio = document.getElementById('myaudio');
+	audio.addEventListener("ended", onTrackEnd, true);
+}
+function prevTrack()
+{
+	if(currentItem > 0)
+		playTrack(currentItem - 1);
+}
+function nextTrack()
+{
+	if(currentItem < playlist.length - 1)
+		playTrack(currentItem + 1);
+}
+//]]>
+ </script>
+ <style type="text/css">
+body { font-family:helvetica, arial; font-size:9pt; margin:0; padding:0; }
+#playlistwrapper { width:100%; min-height:50px; overflow-y:scroll; overflow-x:hidden; margin:-2px; padding:2px; }
+#myaudio { width:100%; }
+#playlist td { white-space:nowrap; }
+#playlist tr { cursor:pointer; }
+#controls { text-align:center; }
+#nowplaying { display:inline-block; min-width:36px; padding:3px; border:1px grey dotted; text-align:center; }
+
+body { background-color: #333; color:#ABA; }
+#playlist tr.current { color:#CFD; background-color:#555; }
+ </style>
+</head><body onLoad="window.onresize = resize_handler; resize_handler();">
+ <audio id="myaudio" controls="1"> HTML5 audio not supported </audio>
+ <div id="controls">
+  <button title="Previous track" onClick="prevTrack()">&#9198;</button>
+  <span id="nowplaying"> . . . </span>
+  <button title="Next track" onClick="nextTrack()">&#9197;</button>
+ </div>
+ <div id="playlistwrapper">
+  <table id="playlist">
+   <tbody />
+  </table>
+ </div>
+</body></html>
+
+<!--
+    var oAudio = document.getElementById('myaudio');
+    var btn = document.getElementById('play');
+
+    // Tests the paused attribute and set state.
+    if (oAudio.paused) {
+	oAudio.play();
+	btn.textContent = "Pause";
+    }
+    else {
+	oAudio.pause();
+	btn.textContent = "Play";
+    }
+
+
+
+    var oAudio = document.getElementById('myaudio');
+    oAudio.currentTime -= 30.0;
+
+    var oAudio = document.getElementById('myaudio');
+    oAudio.currentTime = 0;
+
+audioElm.playbackRate += 1;
+
+-->
+
+
+
