@@ -2,7 +2,7 @@ Source: gnump3d
 Section: sound
 Priority: optional
 Maintainer: Vasily i. Redkin <vir@ctm.ru>
-Build-Depends: debhelper (>= 9), libconfigfile-perl
+Build-Depends: debhelper (>= 9), libconfig-file-perl | libconfigfile-perl
 Standards-Version: 3.9.5
 Homepage: https://github.com/vir/gnump3d
 
