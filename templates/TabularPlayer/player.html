@@ -32,6 +32,12 @@ function init()
 	});
 	audio.addEventListener("playing", onAudioPlaying, true);
 	audio.addEventListener("ended", onTrackEnd, true);
+	document.body.onkeyup = function(e) {
+		if(e.keyCode == 32) {
+			pauseTrack();
+			e.preventDefault();
+		}
+	}
 }
 function play(what, append)
 {
@@ -160,6 +166,15 @@ function nextTrack()
 {
 	if(currentItem < playlist.length - 1)
 		playTrack(currentItem + 1);
+}
+function pauseTrack()
+{
+	var audio = document.getElementById('myaudio');
+	if(audio.paused) {
+		audio.play();
+	} else {
+		audio.pause();
+	}
 }
 //]]>
  </script>
