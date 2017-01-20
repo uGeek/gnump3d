@@ -30,6 +30,8 @@ function init()
 		console.log(audio.error);
 		alert('Error occured: ' + audio.error);
 	});
+	audio.addEventListener("playing", onAudioPlaying, true);
+	audio.addEventListener("ended", onTrackEnd, true);
 }
 function play(what, append)
 {
@@ -130,20 +132,24 @@ function playTrack(num)
 		audio.play();
 	}, true);
 	*/
-	audio.addEventListener("playing", onAudioPlaying, true);
 }
 function onTrackEnd()
 {
 	console.log('audio ended');
 	var audio = document.getElementById('myaudio');
-	audio.removeEventListener("ended", onTrackEnd);
-	nextTrack();
+//	audio.removeEventListener("ended", onTrackEnd);
+	if(currentItem < playlist.length - 1) {
+		nextTrack();
+	} else {
+		currentItem = null;
+		showPlayList();
+	}
 }
 function onAudioPlaying()
 {
 	console.log('audio playing');
 	var audio = document.getElementById('myaudio');
-	audio.addEventListener("ended", onTrackEnd, true);
+//	audio.addEventListener("ended", onTrackEnd, true);
 }
 function prevTrack()
 {
