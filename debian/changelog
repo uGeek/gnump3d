@@ -1,3 +1,9 @@
+gnump3d (3.0.vir9) UNRELEASED; urgency=medium
+
+  * Several HTML5 player improvements added
+
+ -- Vasily i. Redkin <vir@ctm.ru>  Fri, 20 Jan 2017 16:03:44 +0300
+
 gnump3d (3.0.vir8) UNRELEASED; urgency=medium
 
   * TabularPlayer theme with embedded HTML5 player added
