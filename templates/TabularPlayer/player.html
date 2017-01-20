@@ -12,6 +12,25 @@
 //<![CDATA[
 var playlist = [ ];
 var currentItem;
+function init()
+{
+	window.onresize = resize_handler;
+	resize_handler();
+	var audio = document.getElementById('myaudio');
+	audio.addEventListener("wheel", function(e) {
+		e = e || window.event;
+		if(e.deltaY > 0) { // e.deltaY increases when wheel is "scrolled down"
+			audio.volume -= 0.1;
+		} else if(e.deltaY < 0) {
+			audio.volume += 0.1;
+		}
+	});
+	audio.addEventListener("error", function(e) {
+		console.log('Got audio player error:');
+		console.log(audio.error);
+		alert('Error occured: ' + audio.error);
+	});
+}
 function play(what, append)
 {
 //	alert('Playing: ' + what);
@@ -142,6 +161,7 @@ function nextTrack()
 body { font-family:helvetica, arial; font-size:9pt; margin:0; padding:0; }
 #playlistwrapper { width:100%; min-height:50px; overflow-y:scroll; overflow-x:hidden; margin:-2px; padding:2px; }
 #myaudio { width:100%; }
+#playlist { min-width:100%; }
 #playlist td { white-space:nowrap; }
 #playlist tr { cursor:pointer; }
 #controls { text-align:center; }
@@ -150,7 +170,7 @@ body { font-family:helvetica, arial; font-size:9pt; margin:0; padding:0; }
 body { background-color: #333; color:#ABA; }
 #playlist tr.current { color:#CFD; background-color:#555; }
  </style>
-</head><body onLoad="window.onresize = resize_handler; resize_handler();">
+</head><body onLoad="init();">
  <audio id="myaudio" controls="1"> HTML5 audio not supported </audio>
  <div id="controls">
   <button title="Previous track" onClick="prevTrack()">&#9198;</button>
@@ -163,32 +183,4 @@ body { background-color: #333; color:#ABA; }
   </table>
  </div>
 </body></html>
-
-<!--
-    var oAudio = document.getElementById('myaudio');
-    var btn = document.getElementById('play');
-
-    // Tests the paused attribute and set state.
-    if (oAudio.paused) {
-	oAudio.play();
-	btn.textContent = "Pause";
-    }
-    else {
-	oAudio.pause();
-	btn.textContent = "Play";
-    }
-
-
-
-    var oAudio = document.getElementById('myaudio');
-    oAudio.currentTime -= 30.0;
-
-    var oAudio = document.getElementById('myaudio');
-    oAudio.currentTime = 0;
-
-audioElm.playbackRate += 1;
-
--->
-
-
 
